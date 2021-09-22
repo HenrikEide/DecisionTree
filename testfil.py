@@ -25,7 +25,9 @@ def getLabelSplitAvg(X : np.ndarray, y : list, col : int) -> Tuple[list, list]:
             below.append(y[i])
     return (aboveEq, below)
 
+
 def getLabelSplitAvgX(X : np.ndarray, y : list, col : int) -> Tuple[list, list]:
+    """Only temporary, needs refactoring into getLabelSplitAvg"""
     xAvg = np.sum(X[:][col])/len(y)
     aboveEq = []
     below = []
