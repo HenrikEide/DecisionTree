@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+
+from numpy.lib.function_base import select
 from node import Node
 import numpy as np
 
@@ -50,17 +52,17 @@ class Tree():
     def probability(self, X, function, split, col, y):
         """"
         y: input
-        Y: selected Y
+        selected_label: selected Y
         _y: y zero
         """
         column = self.get_column(col, X)
         rows = [i for i, val in enumerate(
             column) if function(val, split)]
-        Y = [val for i, val in enumerate(y) if i in rows]
-        _y = [y for y in Y if y == 0]
-        if len(Y) == 0:
+        selected_label = [label for i, label in enumerate(y) if i in rows]
+        _y = [y for y in selected_label if y == "h"]
+        if len(selected_label) == 0:
             return 0.5
-        return len(_y)/len(Y)
+        return len(_y)/len(selected_label)
 
     def calculate_information_gain(self, split, X, y, function, col, impurity_measure):
         probability = self.probability(X, function, split, col, y)
@@ -69,7 +71,7 @@ class Tree():
         if impurity_measure == "entropy":
             return self.entropy(probability)
         elif impurity_measure == "gini":
-            return self.gini_index(probability)
+            return self.gini_index(-probability)
 
     def information_gain(self, col, split, X, impurity_measure, y):
         information_gain = self.calculate_information_gain(split, X, y, self.less, col, impurity_measure) -\
@@ -89,13 +91,17 @@ class Tree():
 
     def entropy(self, probability):
         p2 = 1 - probability
-        if probability == 1 or p2 == 0:
-            return probability
-        return (-1) * (probability * np.log2(probability) + (p2) * np.log2(p2))
+        return_stuff = (-1) * (probability *
+                               np.log2(probability) + (p2) * np.log2(p2))
+        print(return_stuff)
+        return return_stuff
 
     def gini_index(self, probability):
         '''TODO: Test'''
-        return probability * (1-(probability)) + (1-probability) * (1-(1-probability))
+        return_stuff = probability * \
+            (1-(probability)) + (1-probability) * (1-(1-probability))
+        print(return_stuff)
+        return return_stuff
 
     def accuracy(self, X_prune, y_prune):
         '''TODO: THIS NEEDS TO BE REFACTORED FOR SUBMISSION!'''
