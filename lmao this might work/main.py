@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import pandas as pd
 import numpy as np
-from node import Node
+from freshNode import Node
 from tree import Tree
 
 
@@ -38,7 +38,7 @@ def split_data(magic_data, split_percent):
         magic_data), "\nlength of training data:", len(train), "\nlength of test data:", len(test))
 
 
-def get_data(dataset="magic04.data", separator=',', header_size=None):
+def get_data(dataset="lmao this might work\magic04.data", separator=',', header_size=None):
     data = pd.read_csv(dataset, sep=separator, header=header_size)
 
     ## print("Data length:", len(data))
@@ -109,10 +109,11 @@ if __name__ == "__main__":
 
     data = get_data()
     # TODO: add time
-    print(len(data.training_data), len(data.test_data))
+    print(f"Len training data: {len(data.training_data)}\nlen test data: {len(data.test_data)}")
     tree = Tree()
     tree.learn(data.train_X, data.train_Y, tree.root, data.test_X,
                data.test_Y, prune=True, impurity_measure="entropy")
+    print("Learn finished.")
     wrong = 0
     correct = 0
     for i, x in enumerate(data.train_X):
@@ -122,11 +123,12 @@ if __name__ == "__main__":
             correct += 1
         else:
             wrong += 1
+    
 
     # TODO: The whole main is copy paste, needs refactor
     print("training data length:", len(data.training_data),
           "testing data length:", len(data.test_data))
-    print(f"correct predictions: {correct}, wrong predictions: {wrong}")
+    print(f"\nPrediction.\nWrong: {wrong}\nCorrect: {correct}")
     print(f"accuracy {correct/(correct+wrong)}")
 
     '''testing on test data'''

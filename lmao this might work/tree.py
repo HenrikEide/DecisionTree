@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from node import Node
+from freshNode import Node
 import numpy as np
 
 
@@ -16,7 +16,7 @@ class Tree():
         self.root.print(0)
 
     def get_most_common_y(self, y):
-        count = np.unique(y)
+        count = np.unique(y) # Won't work, returnerer alltid ["g", "h"]
         return count[0]
 
     def is_x_identical(self, X):
@@ -26,7 +26,7 @@ class Tree():
         return True
 
     def is_label_identical(self, y):
-        if np.all(y) or not np.any(y):
+        if np.all(y) or not np.any(y): # what
             self.root.y = y[0]
             return
 
@@ -162,8 +162,8 @@ class Tree():
         leafaccuracy = self.accuracy(X_prune, y_prune)
 
         if leafaccuracy >= accuracy:
-            print(
-                f"new accuracy {leafaccuracy} was better/equal than {accuracy}, pruning...")
+            None
+            #print(f"new accuracy {leafaccuracy} was better/equal than {accuracy}, pruning...")
         else:
             node.left = old_left
             node.right = old_right
