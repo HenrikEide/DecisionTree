@@ -60,6 +60,7 @@ def get_best_tree(tree_list, data):
             else:
                 wrong += 1
         accuracy = correct/(correct+wrong)
+        print(accuracy)
         tree_scores.append((tree_names[i], accuracy))
         if best_accuracy < accuracy:
             print(f"new best accuracy found: {accuracy}")

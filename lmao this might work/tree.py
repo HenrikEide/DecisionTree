@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from node import Node
 import numpy as np
-import pandas as pd
 
 
 @dataclass
@@ -54,11 +53,6 @@ class Tree():
         return np.array(rows)
 
     def probability(self, X, function, split, col, y):
-        """"
-        y: input
-        selected_label: selected Y
-        _y: y zero
-        """
         column = self.get_column(col, X)
         rows = [i for i, label in enumerate(
             column) if function(label, split)]
@@ -102,7 +96,6 @@ class Tree():
         return return_stuff
 
     def gini_index(self, probability):
-        '''TODO: Test'''
         return_stuff = probability * \
             (1-(probability)) + (1-probability) * (1-(1-probability))
         return return_stuff
@@ -121,7 +114,8 @@ class Tree():
 
     def learn(self, X, y, node, X_prune, y_prune, prune=False, impurity_measure="entropy"):
         if node is None:
-            raise Exception("Node is None")
+            print("Node is None")
+            exit()
         self.is_label_identical(y)
         self.is_x_identical(X)
 
