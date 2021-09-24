@@ -43,7 +43,7 @@ if __name__ == "__main__":
     tree = Tree()
     start_time = time.time()
     tree.learn(data.train_X, data.train_Y, tree.root, data.test_X,
-               data.test_Y, prune=False, impurity_measure="gini")
+               data.test_Y, prune=False, impurity_measure="entropy")
     wrong = 0
     correct = 0
     for i, x in enumerate(data.train_X):

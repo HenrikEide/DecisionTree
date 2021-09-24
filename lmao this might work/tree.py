@@ -19,8 +19,14 @@ class Tree():
         self.root.print(0)
 
     def get_most_common_y(self, y):
-        count = np.unique(y)
-        return count[0]
+        count = 0
+        for char in y:
+            if char == "g":
+                count += 1
+        if count >= len(y)/2:
+            return "g"
+        else:
+            return "h"
 
     def is_x_identical(self, X):
         for row in X:
@@ -59,7 +65,8 @@ class Tree():
         rows = [i for i, val in enumerate(
             column) if function(val, split)]
         selected_label = [label for i, label in enumerate(y) if i in rows]
-        _y = [y for y in selected_label if y == "h"]
+        """TODO: endre tilbake kanskje?"""
+        _y = [y for y in selected_label if y == "g"]
         if len(selected_label) == 0:
             return 0.5
         return len(_y)/len(selected_label)
@@ -93,14 +100,15 @@ class Tree():
         p2 = 1 - probability
         return_stuff = (-1) * (probability *
                                np.log2(probability) + (p2) * np.log2(p2))
-        print(return_stuff)
+        # print(probability)
+        # print(return_stuff)
         return return_stuff
 
     def gini_index(self, probability):
         '''TODO: Test'''
         return_stuff = probability * \
             (1-(probability)) + (1-probability) * (1-(1-probability))
-        print(return_stuff)
+        # print(return_stuff)
         return return_stuff
 
     def accuracy(self, X_prune, y_prune):
