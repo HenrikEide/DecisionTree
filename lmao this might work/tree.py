@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from node import Node
+from newnode import Node
 import numpy as np
 
 

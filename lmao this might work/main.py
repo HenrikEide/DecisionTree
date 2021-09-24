@@ -54,7 +54,6 @@ def get_best_tree(tree_list, data):
         accuracy = 0
         wrong = 0
         correct = 0
-        print(accuracy)
         for j, x in enumerate(data.train_X):
             prediction = tree.predict(tree.root, x)
             if prediction == data.train_Y[j]:
@@ -62,7 +61,6 @@ def get_best_tree(tree_list, data):
             else:
                 wrong += 1
         accuracy = correct/(correct+wrong)
-        print(accuracy)
         tree_scores.append((tree_names[i], accuracy))
         if best_accuracy < accuracy:
             print(f"new best accuracy found: {accuracy}")
@@ -72,7 +70,7 @@ def get_best_tree(tree_list, data):
 
 
 if __name__ == "__main__":
-    data = get_data(split=0.10)
+    data = get_data(split=0.25)
     tree1 = Tree()
     tree2 = Tree()
     tree3 = Tree()
