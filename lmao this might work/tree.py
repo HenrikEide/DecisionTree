@@ -165,12 +165,12 @@ class Tree():
             node.right = old_right
             node.y = None
 
-    def predict(self, node, x):
+    def predict(self, node, row):
         split_val = node.data
         col = node.column
         if node.left is None or node.right is None:
             return node.y
-        if x[col] < split_val:
-            return self.predict(node.left, x)
+        if row[col] < split_val:
+            return self.predict(node.left, row)
         else:
-            return self.predict(node.right, x)
+            return self.predict(node.right, row)

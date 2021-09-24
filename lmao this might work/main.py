@@ -38,35 +38,38 @@ def split_data(magic_data, split_percent):
     return data
 
 
-def get_data(dataset="lmao this might work\magic04.data", separator=',', header_size=None, split=0.25):
+def get_data(dataset="magic04.data", separator=',', header_size=None, split=0.25):
     data = pd.read_csv(dataset, sep=separator, header=header_size)
     data = split_data(data, split)
     return data
 
 
 def get_best_tree(tree_list, data):
+    """Loop over possible settings to find best model"""
     tree_names = ["Tree with entropy without pruning", "Tree with entropy and pruning",
                   "Tree with gini index without pruning", "Tree with gini index with pruning"]
-    best_accuracy = 0
+    
     best_tree = 0
     tree_scores = []
-    for i, tree in enumerate(tree_list):
-        accuracy = 0
+    best_accuracy = 0
+    for ind, tree in enumerate(tree_list):
         wrong = 0
-        correct = 0
+        right = 0
+        accuracy = 0
         for j, x in enumerate(data.train_X):
             prediction = tree.predict(tree.root, x)
             if prediction == data.train_Y[j]:
-                correct += 1
+                right += 1
             else:
                 wrong += 1
-        accuracy = correct/(correct+wrong)
-        tree_scores.append((tree_names[i], accuracy))
+        accuracy = right/(right+wrong)
+        tree_scores.append((tree_names[ind], accuracy))
         if best_accuracy < accuracy:
             print(f"new best accuracy found: {accuracy}")
+            best_tree = ind
             best_accuracy = accuracy
-            best_tree = i
-    return tree_list[best_tree], tree_names[i], tree_scores
+            
+    return tree_list[best_tree], tree_names[ind], tree_scores
 
 
 if __name__ == "__main__":
@@ -108,15 +111,15 @@ if __name__ == "__main__":
     print(best_tree, "was the best tree")
     start_time = time.time()
     wrong = 0
-    correct = 0
-    for i, x in enumerate(data.test_X):
-        predicted_val = tree_to_test.predict(tree_to_test.root, x)
-        if predicted_val == data.test_Y[i]:
-            correct += 1
+    right = 0
+    for ind, row in enumerate(data.test_X):
+        predicted_val = tree_to_test.predict(tree_to_test.root, row)
+        if predicted_val == data.test_Y[ind]:
+            right += 1
         else:
             wrong += 1
     print(
-        f"correct/wrong predictions: {correct}/{wrong}\naccuracy {correct/(correct+wrong)} in {time.time()-start_time} seconds")
+        f"correct/wrong predictions: {right}/{wrong}\naccuracy {right/(right+wrong)} in {time.time()-start_time} seconds")
     
     print(f"\nSklearn's decision tree for comparison:\nAccuracy: {accuracy_score(data.test_Y, skpreds)} in {sktime} seconds")
     
