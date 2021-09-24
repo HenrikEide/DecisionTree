@@ -14,7 +14,7 @@ class Node():
 
     def print(self, depth):
         if self.left is None or self.right is None:
-            print((depth*"---") + f"Leaf node( y {y})")
+            print((depth*"---") + f"Leaf node( y {self.y})")
             return
         print((depth*"---") +
               f"node( column: {self.column}, data {self.data}, y {self.y} children:")
