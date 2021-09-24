@@ -39,11 +39,11 @@ def get_data(dataset="magic04.data", separator=',', header_size=None, split=0.25
 
 if __name__ == "__main__":
 
-    data = get_data(split=0.1)
+    data = get_data(split=0.8)
     tree = Tree()
     start_time = time.time()
     tree.learn(data.train_X, data.train_Y, tree.root, data.test_X,
-               data.test_Y, prune=False, impurity_measure="entropy")
+               data.test_Y, prune=False, impurity_measure="gini")
     wrong = 0
     correct = 0
     for i, x in enumerate(data.train_X):

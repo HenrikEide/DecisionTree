@@ -62,11 +62,10 @@ class Tree():
         _y: y zero
         """
         column = self.get_column(col, X)
-        rows = [i for i, val in enumerate(
-            column) if function(val, split)]
+        rows = [i for i, label in enumerate(
+            column) if function(label, split)]
         selected_label = [label for i, label in enumerate(y) if i in rows]
-        """TODO: endre tilbake kanskje?"""
-        _y = [y for y in selected_label if y == "g"]
+        _y = [y for y in selected_label if y == "h"]
         if len(selected_label) == 0:
             return 0.5
         return len(_y)/len(selected_label)
@@ -108,7 +107,6 @@ class Tree():
         '''TODO: Test'''
         return_stuff = probability * \
             (1-(probability)) + (1-probability) * (1-(1-probability))
-        # print(return_stuff)
         return return_stuff
 
     def accuracy(self, X_prune, y_prune):
