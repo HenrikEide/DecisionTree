@@ -104,7 +104,7 @@ class Tree():
     def accuracy(self, X_prune, y_prune):
         '''TODO: THIS NEEDS TO BE REFACTORED FOR SUBMISSION!'''
         '''return accuracy of the current tree, given test data X and y'''
-        wrong = 1
+        wrong = 1 # Any reason wrong starts at 1?
         correct = 0
         for rownumber, x in enumerate(X_prune):
             predicted_val = self.predict(self.root, x)
