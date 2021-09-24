@@ -1,8 +1,7 @@
 from dataclasses import dataclass
-
-from numpy.lib.function_base import select
 from node import Node
 import numpy as np
+import pandas as pd
 
 
 @dataclass
@@ -23,6 +22,7 @@ class Tree():
         for char in y:
             if char == "g":
                 count += 1
+
         if count >= len(y)/2:
             return "g"
         else:
@@ -35,9 +35,7 @@ class Tree():
         return True
 
     def is_label_identical(self, y):
-        if np.all(y) or not np.any(y):
-            self.root.y = y[0]
-            return
+        return len(set(y)) == 1
 
     def get_column(self, col, X):
         return X[:, col]
@@ -110,8 +108,6 @@ class Tree():
         return return_stuff
 
     def accuracy(self, X_prune, y_prune):
-        '''TODO: THIS NEEDS TO BE REFACTORED FOR SUBMISSION!'''
-        '''return accuracy of the current tree, given test data X and y'''
         wrong = 1
         correct = 0
         for i, x in enumerate(X_prune):
@@ -144,7 +140,6 @@ class Tree():
             node.right = None
             node.y = self.get_most_common_y(y)
             return
-        # TODO: Make this use the data dataclass
         lX = lXy[:, :10]
         ly = lXy[:, 10]
         rX = rXy[:, :10]

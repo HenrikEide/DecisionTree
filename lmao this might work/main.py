@@ -38,8 +38,7 @@ def get_data(dataset="magic04.data", separator=',', header_size=None, split=0.25
 
 
 if __name__ == "__main__":
-
-    data = get_data(split=0.8)
+    data = get_data(split=0.001)
     tree = Tree()
     start_time = time.time()
     tree.learn(data.train_X, data.train_Y, tree.root, data.test_X,
