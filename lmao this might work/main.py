@@ -2,6 +2,8 @@ from dataclasses import dataclass
 import pandas as pd
 from tree import Tree
 import time
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
 
 @dataclass
@@ -36,7 +38,7 @@ def split_data(magic_data, split_percent):
     return data
 
 
-def get_data(dataset="magic04.data", separator=',', header_size=None, split=0.25):
+def get_data(dataset="lmao this might work\magic04.data", separator=',', header_size=None, split=0.25):
     data = pd.read_csv(dataset, sep=separator, header=header_size)
     data = split_data(data, split)
     return data
@@ -76,6 +78,13 @@ if __name__ == "__main__":
     tree3 = Tree()
     tree4 = Tree()
 
+    # sklearn's decision tree for comparison
+    timestart = time.time()
+    sktree = DecisionTreeClassifier()
+    sktree = sktree.fit(data.train_X, data.train_Y)
+    skpreds = sktree.predict(data.test_X) 
+    sktime = time.time() - timestart
+
     print("Starting entropy tree learning...")
     tree1.learn(data.train_X, data.train_Y, tree1.root, data.pruning_X,
                 data.pruning_Y, prune=False, impurity_measure="entropy")
@@ -110,3 +119,6 @@ if __name__ == "__main__":
             wrong += 1
     print(
         f"correct/wrong predictions: {correct}/{wrong}\naccuracy {correct/(correct+wrong)} in {time.time()-start_time} seconds")
+    
+    print(f"\nSklearn's decision tree for comparison:\nAccuracy: {accuracy_score(data.test_Y, skpreds)} in {sktime} seconds")
+    
