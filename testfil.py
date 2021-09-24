@@ -63,14 +63,14 @@ def learn(X, y):
         return y[0]
 
     elif all(list(map(lambda x: all(list(map(lambda y: X[0][0]==y, x))), list(X)))):
-        return 'g' if list(y).count('g')>(len(y)/2) else 'h'
+        return 'g' if list(y).count('g')>(len(y)-1/2) else 'h'
     
     else:
         splitIndex = entropySplit(X,y)
         x1, x2 = getLabelSplitAvgX(X, y, splitIndex)
         y1, y2 = getLabelSplitAvg(X, y, splitIndex)
 
-        return (learn(x1, y1), learn(x2, y2), splitIndex, np.sum(X[:, splitIndex])/len(y))
+        return (learn(x1, y1), learn(x2, y2), splitIndex, np.sum(X[:, splitIndex])/len(y)-1)
 
 # tree = learn(X, y)
 # predict(new_x, tree)
